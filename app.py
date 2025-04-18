@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, request, jsonify, url_for, redirect
 import os
 import PyPDF2
 from werkzeug.utils import secure_filename
@@ -9,7 +9,7 @@ import secrets
 load_dotenv()
 
 app = Flask(__name__, 
-    static_url_path='/static',
+    static_url_path='/tools/cover-letter-generator/static',
     static_folder='static'
 )
 
@@ -48,12 +48,17 @@ def extract_text_from_txt(file_stream):
         print(f"Error reading TXT: {e}")
         return None
 
+
 @app.route('/')
+def home():
+    return redirect(url_for('index'))  # This redirects '/' to '/tools/cover-letter-generator'
+
+@app.route('/tools/cover-letter-generator/')
 def index():
     """Renders the main landing page."""
     return render_template('index.html')
 
-@app.route('/generate', methods=['POST'])
+@app.route('/tools/cover-letter-generator/generate', methods=['POST'])
 def generate_cover_letter():
     """Handles the cover letter generation request."""
     try:
@@ -136,7 +141,7 @@ def generate_cover_letter():
             """
 
             response = client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant that writes professional cover letters."},
                     {"role": "user", "content": prompt}
@@ -165,5 +170,7 @@ def generate_cover_letter():
         return jsonify({'error': 'An unexpected error occurred during generation.'}), 500
 
 if __name__ == '__main__':
-    debug_mode = os.getenv('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', debug=debug_mode, port=5000)
+    port = int(os.getenv('PORT', 4000))
+    debug_mode = True
+    #os.getenv('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', debug=debug_mode, port=port)

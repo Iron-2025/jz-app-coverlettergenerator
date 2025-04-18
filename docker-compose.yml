@@ -3,10 +3,16 @@ version: '3.8'
 services:
   web:
     build: .
-    ports:
-      - "5000:5000"
+    #ports:
+     - "5000:5000"
     env_file:
       - .env
     volumes:
       - ./static:/app/static
-    restart: unless-stopped 
+    restart: unless-stopped
+    networks:
+      - app-network  # Attach to the same network as the reverse proxy
+
+networks:
+  app-network:
+    external: true  # Use the existing network from Nginx Proxy Manager

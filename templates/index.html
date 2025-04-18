@@ -250,9 +250,9 @@
             }
 
             try {
-                const response = await fetch('/generate', {
+                const response = await fetch('/tools/cover-letter-generator/generate', {
                     method: 'POST',
-                    body: formData // Send FormData (handles text and files)
+                    body: formData
                 });
 
                 const result = await response.json();
