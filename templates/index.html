@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cover Letter Generator</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/avif" href="{{ url_for('static', filename='images/thumb_square_800x800.avif') }}">
+    <link rel="icon" type="image/avif" sizes="32x32" href="{{ url_for('static', filename='images/thumb_square_800x800.avif') }}">
+    <link rel="icon" type="image/avif" sizes="16x16" href="{{ url_for('static', filename='images/thumb_square_800x800.avif') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/thumb_square_800x800.avif') }}">
+    <!-- Include Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f6f8fc 0%, #f0f4f8 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3b82f6;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hover-scale {
+            transition: transform 0.2s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .custom-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <!-- Header/Landing Section -->
+        <header class="text-center mb-12 fade-in">
+            <h1 class="text-5xl font-bold gradient-text mb-4">AI Cover Letter Generator</h1>
+            <p class="text-xl text-gray-600 mb-2">Stop staring at a blank page. Generate personalized cover letters in seconds!</p>
+            <p class="text-lg text-gray-500">Leverage the power of AI to tailor your application to any job description.</p>
+            <div class="mt-8 p-8 glass-effect rounded-xl custom-shadow hover-scale">
+                <h2 class="text-2xl font-semibold text-blue-700 mb-4">Why Use This Tool?</h2>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <li class="flex items-start space-x-3">
+                        <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <span class="font-semibold text-gray-800">Save Time</span>
+                            <p class="text-gray-600">Generate professional letters in minutes</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <span class="font-semibold text-gray-800">Tailored Content</span>
+                            <p class="text-gray-600">Perfectly matched to job requirements</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        <div>
+                            <span class="font-semibold text-gray-800">Professional Tone</span>
+                            <p class="text-gray-600">Always polished and appropriate</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <div>
+                            <span class="font-semibold text-gray-800">Simple & Private</span>
+                            <p class="text-gray-600">No login required, data is private</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Form Section -->
+        <section class="glass-effect p-8 rounded-xl custom-shadow mb-8 fade-in">
+            <h2 class="text-3xl font-semibold mb-8 text-center text-gray-800">Generate Your Cover Letter</h2>
+            <form id="coverLetterForm" class="space-y-8">
+                <!-- Resume Input -->
+                <div class="space-y-4">
+                    <label for="resume_text" class="block text-lg font-medium text-gray-700">1. Your Resume</label>
+                    <p class="text-sm text-gray-500">Paste your resume text below or upload a .txt/.pdf file.</p>
+                    <textarea id="resume_text" name="resume_text" rows="8" 
+                        class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                        placeholder="Paste your full resume text here..."></textarea>
+                    <div class="flex items-center space-x-4">
+                        <label for="resume_file" class="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium rounded-lg cursor-pointer transition duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                            <span>Upload Resume</span>
+                            <input type="file" id="resume_file" name="resume_file" class="hidden" accept=".txt,.pdf">
+                        </label>
+                        <span id="resume_file_name" class="text-sm text-gray-600"></span>
+                    </div>
+                </div>
+
+                <!-- Job Description Input -->
+                <div class="space-y-4">
+                    <label for="job_description_text" class="block text-lg font-medium text-gray-700">2. Job Description</label>
+                    <p class="text-sm text-gray-500">Paste the job description text below or upload a .txt/.pdf file.</p>
+                    <textarea id="job_description_text" name="job_description_text" rows="8" 
+                        class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                        placeholder="Paste the full job description text here..."></textarea>
+                    <div class="flex items-center space-x-4">
+                        <label for="job_description_file" class="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium rounded-lg cursor-pointer transition duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                            <span>Upload Job Description</span>
+                            <input type="file" id="job_description_file" name="job_description_file" class="hidden" accept=".txt,.pdf">
+                        </label>
+                        <span id="job_description_file_name" class="text-sm text-gray-600"></span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" id="generateBtn" 
+                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg text-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Generate Cover Letter
+                    </button>
+                    <div id="loader" class="loader"></div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Output Section -->
+        <section id="outputSection" class="glass-effect p-8 rounded-xl custom-shadow fade-in" style="display: none;">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800">Generated Cover Letter</h2>
+            <div id="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg" style="display: none;"></div>
+            <div id="coverLetterOutput" class="whitespace-pre-wrap p-6 border border-gray-200 rounded-lg bg-white min-h-[200px] text-gray-700 leading-relaxed">
+                <!-- Cover letter will appear here -->
+            </div>
+            <button id="copyBtn" class="mt-6 inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                </svg>
+                Copy to Clipboard
+            </button>
+        </section>
+    </div>
+
+    <!-- JavaScript for form submission and handling -->
+    <script>
+        const form = document.getElementById('coverLetterForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const loader = document.getElementById('loader');
+        const outputSection = document.getElementById('outputSection');
+        const coverLetterOutput = document.getElementById('coverLetterOutput');
+        const errorMessage = document.getElementById('errorMessage');
+        const copyBtn = document.getElementById('copyBtn');
+
+        // --- File Input Handling ---
+        const resumeFileInput = document.getElementById('resume_file');
+        const resumeFileNameSpan = document.getElementById('resume_file_name');
+        const jobDescFileInput = document.getElementById('job_description_file');
+        const jobDescFileNameSpan = document.getElementById('job_description_file_name');
+
+        resumeFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            resumeFileNameSpan.textContent = file ? file.name : '';
+            // Optional: Clear textarea if file is selected? Or allow both? Decide later.
+        });
+
+        jobDescFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            jobDescFileNameSpan.textContent = file ? file.name : '';
+        });
+
+
+        // --- Form Submission ---
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Clear previous results and errors
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+            coverLetterOutput.textContent = '';
+            outputSection.style.display = 'none'; // Hide output section initially
+
+            // Show loader and disable button
+            loader.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('resume_text', document.getElementById('resume_text').value);
+            formData.append('job_description_text', document.getElementById('job_description_text').value);
+
+            // Append files if they exist
+            if (resumeFileInput.files.length > 0) {
+                formData.append('resume_file', resumeFileInput.files[0]);
+            }
+            if (jobDescFileInput.files.length > 0) {
+                formData.append('job_description_file', jobDescFileInput.files[0]);
+            }
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    body: formData // Send FormData (handles text and files)
+                });
+
+                const result = await response.json();
+
+                outputSection.style.display = 'block'; // Show output section
+
+                if (response.ok) {
+                    coverLetterOutput.textContent = result.cover_letter;
+                } else {
+                    // Display error message from server
+                    errorMessage.textContent = result.error || 'An unknown error occurred.';
+                    errorMessage.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                outputSection.style.display = 'block'; // Show output section even on fetch error
+                errorMessage.textContent = 'Failed to connect to the server. Please try again later.';
+                errorMessage.style.display = 'block';
+            } finally {
+                // Hide loader and re-enable button
+                loader.style.display = 'none';
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        });
+
+        // --- Copy to Clipboard ---
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(coverLetterOutput.textContent)
+                .then(() => {
+                    // Optional: Show a temporary "Copied!" message
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => { copyBtn.textContent = 'Copy to Clipboard'; }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    // Optional: Show an error message to the user
+                });
+        });
+
+    </script>
+
+</body>
+</html>

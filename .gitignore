@@ -1,0 +1,19 @@
+# Environment variables
+.env
+*.env
+
+# Python cache and virtual environment files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.venv/
+
+# Uploads directory (if used for temporary storage)
+uploads/
+
+# IDE specific files
+.vscode/
+.idea/
