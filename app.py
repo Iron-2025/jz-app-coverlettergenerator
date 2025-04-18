@@ -171,6 +171,5 @@ def generate_cover_letter():
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 4000))
-    debug_mode = True
-    #os.getenv('FLASK_ENV') == 'development'
+    debug_mode = os.getenv('FLASK_ENV') == 'development'
     app.run(host='0.0.0.0', debug=debug_mode, port=port)
